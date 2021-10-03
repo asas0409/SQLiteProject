@@ -2,6 +2,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Scanner;
 
 public class Main {
 
@@ -13,6 +14,12 @@ public class Main {
 			
 			String dbFile = "myfirst.db";
 			con = DriverManager.getConnection("jdbc:sqlite:" + dbFile);
+			int menu;
+			Scanner s = new Scanner(System.in);
+			while(true) {
+			System.out.print("실행할 메뉴 입력(C:1, R:2, U:3, D:4, 종료: 0) : ");
+			menu = s.nextInt();
+			if(menu==2) {
 			//조회
 			System.out.println("\n*** 데이터 조회 ***");
 			Statement stat1 = con.createStatement();
@@ -28,7 +35,7 @@ public class Main {
 				System.out.println(id + " " + name + " " + a_type + " " + a_year + " " + debut + " " + regdate);
 			}
 			stat1.close();
-			
+			}else if (menu==1) {
 			//추가
 			System.out.println("\n*** 새 데이터 추가 ***");
 			Statement stat2 = con.createStatement();
@@ -37,7 +44,7 @@ public class Main {
 			if(cnt>0) System.out.println("새로운 데이터가 추가되었습니다!");
 			else System.out.println("[Error] 데이터 추가 오류!");
 			stat2.close();
-			
+			}else if (menu==3) {
 			//수정
 			System.out.println("\n*** 데이터 수정 ***");
 			Statement stat3 = con.createStatement();
@@ -46,7 +53,7 @@ public class Main {
 			if(cnt3>0) System.out.println("데이터가 수정되었습니다.");
 			else System.out.println("[Error] 데이터 수정 오류!");
 			stat3.close();
-			
+			}else if (menu==4) {
 			//삭제
 			System.out.println("\n*** 데이터 삭제 ***");
 			Statement stat4 = con.createStatement();
@@ -55,7 +62,11 @@ public class Main {
 			if(cnt4>0) System.out.println("데이터가 삭제되었습니다.");
 			else System.out.println("[Error] 데이터 삭제 오류!");
 			stat4.close();
+			}else if(menu==0) {
+				return;
+			}
 			
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
